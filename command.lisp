@@ -8,10 +8,6 @@
 
 (defvar *cmd-keys* '())
 
-;; Add commands here
-(add-to-cmds "help"   'send-help   0)
-(add-to-cmds "uptime" 'send-uptime 0)
-
 (defun add-to-cmds (key func level)
   "Adds command and function to command table and updates command list."
   (when (not (gethash key *cmds*))
@@ -20,6 +16,10 @@
           (sort
            (cons key *cmd-keys*)
            #'string<))))
+
+;; Add commands here
+(add-to-cmds "help"   'send-help   0)
+(add-to-cmds "uptime" 'send-uptime 0)
 
 (defun get-cmd (key)
   "Returns function that is attached to the input command. Returns nil if none."

@@ -26,6 +26,16 @@
     (log-msg msg))
   (handle-cmd msg))
 
+(defun init ()
+  "This will load up our configuration files located at both config and ~/.ackbot.d/init.el"
+  (ensure-directories-exist *load-path*)
+  (load (merge-pathnames "init.el" *load-path*))
+  (loop for module in *load-modules*
+       do #'(lambda (mod)
+            (when *verbose*
+              (format t "Loading module ~A~%" mod))
+            (load (merge-pathnames mod *modules-path*)))))
+
 ;; TODO: Update this to not rely on the deprecated
 ;;  (start-background-message-handler)
 (defun start-bot (&optional (verbose t) (logging t))
@@ -34,9 +44,10 @@
   (setf *logging* logging)
   (when *verbose*
     (format t "Starting bot...~%"))
+  (init)
   (setf *start-time* (get-universal-time)) ;; Grab current time
-  (setf *connection* (cl-irc:connect :nickname *nick*
-                                     :server   *host*))
+  (setf *connection* (irc:connect :nickname *nick*
+                                  :server   *host*))
   ;; TODO: Load User Database
   (mapcar #'(lambda (channel)
               (cl-irc:join *connection* channel)) ;; Join all configured channels
