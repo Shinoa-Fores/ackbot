@@ -70,15 +70,10 @@
            (format nil "~A~A" *cmd-key* cmd))))
 
 (defun send-uptime (msg)
+  "Send user current uptime, privately"
   (let ((time-up (- (get-universal-time) *start-time*)))
     (irc:privmsg
      (irc:connection msg)
      (irc:source msg)
      (format nil "Uptime: ~A"
              (readable-time time-up)))))
-
-(defun readable-time (seconds)
-  (let ((hours (truncate seconds 3600))
-        (minutes (truncate seconds 60))
-        (seconds (mod seconds 60)))
-    (format nil "~A:~A:~A" hours minutes seconds)))

@@ -2,9 +2,9 @@
 
 (asdf:defsystem #:ackbot
   :serial t
-  :description "Describe ackbot here"
-  :author "Your Name <your.name@example.com>"
-  :license "Specify license here"
+  :description "IRC Bot"
+  :author "Chris Font <font.christopher [at] gmail [dot] com>"
+  :license ""
   :depends-on (#:cl-irc
                #:cl-ppcre)
   :components ((:file "package")
