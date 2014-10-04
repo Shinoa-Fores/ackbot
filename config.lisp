@@ -6,9 +6,9 @@
 
 (defvar *cmd-key* #\!)
 
-(defvar *host* "acm.cs.uic.edu")
+(defvar *host* "")
 (defvar *port* 6667)
 
 (defvar *nick* "ackbot")
 
-(defvar *channels* '("#acm"))
+(defvar *channels* '())
