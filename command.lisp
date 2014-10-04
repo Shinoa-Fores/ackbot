@@ -27,10 +27,10 @@
 
 (defun unknown-cmd (msg)
   "Inform the user that you have no clue what they meant."
-  (cl-irc:privmsg (cl-irc:connection msg)
-                  (cl-irc:source msg)
+  (cl-irc:privmsg (irc:connection msg)
+                  (irc:source msg)
                   (format nil "~A: Unknown command. For help, use ~Ahelp"
-                          (cl-irc:user msg)
+                          (irc:user msg)
                           *cmd-key*)))
 
 ;; At the moment, this is short-circuited eventually it will check to see if the
@@ -41,7 +41,7 @@
 ;; Parse input message to get desired command, then execute it
 (defun handle-cmd (msg)
   "This function will split the message into its command component"
-  (let ((cmd (car (cl-ppcre:split "\\s+" (cadr (cl-irc:arguments msg))))))
+  (let ((cmd (car (cl-ppcre:split "\\s+" (cadr (irc:arguments msg))))))
     (if (cl-ppcre:scan (format nil "^~A" *cmd-key*) cmd)
         (find-cmd msg (remove *cmd-key* cmd))
         (unknown-cmd msg))))
